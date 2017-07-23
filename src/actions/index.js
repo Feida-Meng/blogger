@@ -15,6 +15,7 @@ export function fetchPosts() {
 
 export function fetchPost(id) {
   const request = axios.get(`${ROOT_URL}posts/${id}${K}`);
+  console.log("hkhs<dch",request);
   return {
     type: FETCH_POST,
     payload: request
