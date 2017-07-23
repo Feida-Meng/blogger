@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from  'react-router-dom'
 
 class PostsNew extends Component {
 
   renderField(field) {
+    const { meta: {touched, error} } = field;
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`;
     return(
-      <div className='form-group'>
+      <div className={className}>
         <label> {field.label} </label>
+
         <input
           className='form-control'
           type='text'
           {...field.input}
         />
+
+        {field.meta.touched ? <div className='text-help'>{field.meta.error}</div> : undefined}
+
       </div>
     );
   }
 
+  onSubmit(values) {
+    console.log(values);
+  }
+
   render() {
+    const { handleSubmit } = this.props;
     return (
       <div>
-        <form>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Field
             name='title'
             label='Title'
@@ -36,17 +48,30 @@ class PostsNew extends Component {
             label='Post content'
             component={this.renderField}
           />
-
-
-
+          <button type='submit' className='btn btn-primary'> Submit </button>
+          <Link to='/' className='btn btn-danger'> Cancel </Link>
         </form>
       </div>
     );
   }
 }
 
-function validate() {
-  
+function validate(values) {
+  const errors = {};
+  if (!values.title) {
+    errors.title = "Enter a title!";
+  }
+
+  if (!values.categories) {
+    errors.categories = "Enter a category!";
+  }
+
+  if (!values.content) {
+    errors.content = "Enter a content!";
+  }
+  //if errors is empty, the form is fine to submit
+  //If errors has any properties, redux form assumes form is invalid
+  return errors;
 }
 
 export default reduxForm({
