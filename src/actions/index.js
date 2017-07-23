@@ -1,5 +1,6 @@
 import axios from 'axios';
 export const FETCH_POSTS = 'fetch_posts';
+export const CREATE_POSTS= 'create_posts';
 const ROOT_URL = 'https://reduxblog.herokuapp.com/api/'
 const K = '?key=alien1234';
 
@@ -11,10 +12,10 @@ export function fetchPosts() {
   };
 }
 
-// export function postPosts() {
-//   const request = axios.post(`${ROOT_URL}posts${K}`);
-//   return {
-//     type: FETCH_POSTS,
-//     payload: request
-//   };
-// }
+export function createPosts(values) {
+  const request = axios.post(`${ROOT_URL}posts${K}`,values);
+  return {
+    type: CREATE_POSTS,
+    payload: request
+  };
+}
