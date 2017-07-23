@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from  'react-router-dom'
+import { Link } from  'react-router-dom';
+import { connect } from 'react-redux';
+import { createPosts } from '../actions/index';
 
 class PostsNew extends Component {
 
@@ -24,7 +26,9 @@ class PostsNew extends Component {
   }
 
   onSubmit(values) {
-    console.log(values);
+    this.props.createPosts(values,() => {
+      this.props.history.push('/');
+    });
   }
 
   render() {
@@ -77,4 +81,7 @@ function validate(values) {
 export default reduxForm({
   validate,
   form: 'PostsNewForm' //has to be unique, name of the form to distingush different forms on the same page
-})(PostsNew);
+})(
+  //combine two helpers(reduxForm & connect) at the same time
+  connect(null,{ createPosts})(PostsNew) //return a react component
+);
