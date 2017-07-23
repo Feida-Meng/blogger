@@ -11,8 +11,8 @@ export function fetchPosts() {
   };
 }
 
-// export function fetchPosts() {
-//   const request = axios.get(`${ROOT_URL}posts${K}`);
+// export function postPosts() {
+//   const request = axios.post(`${ROOT_URL}posts${K}`);
 //   return {
 //     type: FETCH_POSTS,
 //     payload: request
